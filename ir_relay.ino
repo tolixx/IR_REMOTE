@@ -108,7 +108,7 @@ void programIR (int set = 0) {
           
           for ( int i = 0; i < num; i++ ) {
              if ( buffer[i] == results.value ) {
-                 Serial.print ( "Already command : " );
+                 Serial.print ( "Эта кооманда уже есть, выберите другую " );
                  Serial.println ( i );
                  already = true;
              }
@@ -126,7 +126,7 @@ void programIR (int set = 0) {
      delay(100);
           
      if ( millis() - tick > PROG_TIMEOUT ) {
-        Serial.println ( "Timeout occured : all codes reset" );
+        Serial.println ( "Выход из режима программирования без записи" );
         return;
      }
      
@@ -137,7 +137,8 @@ void programIR (int set = 0) {
      writeLong ( addresess[set] + i*sizeof(long), buffer[i] );   
    }
   
-   Serial.println ( "Programm complete" ); 
+   Serial.print ( "Программирование успешно завершено для пульта " ); 
+   Serial.println ( set );
 }
 
 void processIR() {
@@ -190,8 +191,6 @@ void inverseAllPins ( ) {
      digitalWrite ( outs[i], !digitalRead ( outs[i] ) );
   }
 }
-
-//--- you can use up to 3 pults together
 
 int getCommandCode ( unsigned long value ) {
   for ( int j = 0; j < NUM_OF_SETS; j++ ) {
