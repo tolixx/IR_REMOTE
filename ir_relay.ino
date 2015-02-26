@@ -95,7 +95,7 @@ void programIR (int set = 0) {
        Serial.println ( results.value, HEX );
        if  ( results.value == PROG_BUTTON ) {
           set = ( set + 1 ) %  NUM_OF_SETS; //--- По нажатию кнопки программирования переходим к следующему пульту 
-          Serial.print ( "Программируем пульт: " );
+          Serial.print ( "Programming PULT: " );
           Serial.println ( set );
        } else if ( results.value != 0xFFFFFFFF ) {
           
@@ -108,7 +108,7 @@ void programIR (int set = 0) {
           
           for ( int i = 0; i < num; i++ ) {
              if ( buffer[i] == results.value ) {
-                 Serial.print ( "Эта кооманда уже есть, выберите другую " );
+                 Serial.print ( "Button used, choose another one " );
                  Serial.println ( i );
                  already = true;
              }
@@ -126,7 +126,7 @@ void programIR (int set = 0) {
      delay(100);
           
      if ( millis() - tick > PROG_TIMEOUT ) {
-        Serial.println ( "Выход из режима программирования без записи" );
+        Serial.println ( "Terminating programming" );
         return;
      }
      
@@ -137,7 +137,7 @@ void programIR (int set = 0) {
      writeLong ( addresess[set] + i*sizeof(long), buffer[i] );   
    }
   
-   Serial.print ( "Программирование успешно завершено для пульта " ); 
+   Serial.print ( "Program completed for PULT " ); 
    Serial.println ( set );
 }
 
@@ -153,7 +153,7 @@ void processIR() {
         if ( results.value == PROG_BUTTON ) {
             programIR ();
         } else if ( ( command = getCommandCode(results.value) ) != -1 ) {
-            Serial.print ( "We detected command:");
+            Serial.print ( "Command detected:");
             Serial.println ( command );
    
             runCommand ( command );           
