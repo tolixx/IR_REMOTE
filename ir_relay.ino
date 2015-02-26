@@ -94,8 +94,8 @@ void programIR (int set = 0) {
      if (irrecv.decode(&results)) {
        Serial.println ( results.value, HEX );
        if  ( results.value == PROG_BUTTON ) {
-          set = ( set + 1 ) %  NUM_OF_SETS; //--- next set is used --- 
-          Serial.print ( "Num for set: " );
+          set = ( set + 1 ) %  NUM_OF_SETS; //--- По нажатию кнопки программирования переходим к следующему пульту 
+          Serial.print ( "Программируем пульт: " );
           Serial.println ( set );
        } else if ( results.value != 0xFFFFFFFF ) {
           
