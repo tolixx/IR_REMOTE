@@ -160,7 +160,7 @@ void processIR() {
         }
      }
           
-     ++pressed;
+
      delay(100);
      irrecv.resume();
   }
