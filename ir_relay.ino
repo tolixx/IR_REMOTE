@@ -32,6 +32,8 @@ int RECV_PIN = 6;
  */
 #define PROG_TIMEOUT 8000
 
+
+#define DELAY_IR_SCAN 100
 /* 
  * Мой модуль реле замкнут при 0 и разомкнут при 1 
  * Если у Вас все наоборот, просто поменяйте эти 2 константы 
@@ -59,9 +61,6 @@ int outs[NUM_OUTS] = { 2, 3, 4, 5 };
 
 int addresess[NUM_OF_SETS] = { 64, 128, 192 };
 
-
-
-
 void setup() {
   irrecv.enableIRIn(); // включить приемник
   for ( int i = 0; i < NUM_OUTS; i++ ) {
@@ -86,7 +85,7 @@ void programIR (int set = 0) {
    unsigned long tick = millis();
    
    Serial.println ( "IR programMode" );
-   delay ( 100 );
+   delay ( DELAY_IR_SCAN );
    irrecv.resume();
    
    do {
@@ -123,7 +122,7 @@ void programIR (int set = 0) {
        irrecv.resume();
      }
      
-     delay(100);
+     delay(DELAY_IR_SCAN);
           
      if ( millis() - tick > PROG_TIMEOUT ) {
         Serial.println ( "Terminating programming" );
@@ -161,7 +160,7 @@ void processIR() {
      }
           
 
-     delay(100);
+     delay(DELAY_IR_SCAN);
      irrecv.resume();
   }
 }
@@ -195,7 +194,7 @@ void inverseAllPins ( ) {
 int getCommandCode ( unsigned long value ) {
   for ( int j = 0; j < NUM_OF_SETS; j++ ) {
     for ( int i = 0; i < COMM_COUNT; i++ ) {
-        if ( readLong ( addresess[j] + i*sizeof(value) ) == value ) {
+        if ( readLong ( addresess[j] + i*sizeof(long) ) == value ) {
            return i;
         }
     }
