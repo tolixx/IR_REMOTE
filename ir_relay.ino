@@ -163,7 +163,6 @@ void processIR() {
         }
      }
           
-
      delay(DELAY_IR_SCAN);
      irrecv.resume();
   }
@@ -181,7 +180,6 @@ void runCommand ( int command ) {
        inverseAllPins ();  
   }
 }
-
 
 void setAllPins ( int value ) {
    for ( int i = 0; i < NUM_OUTS; i++ ) {
@@ -208,19 +206,16 @@ int getCommandCode ( unsigned long value ) {
 
 unsigned long readLong ( int address ) {
    unsigned long result = 0;   
-   
    for ( int i = 0; i < sizeof(long); i++  ) {
        byte val = EEPROM.read(address + i);
        result = result >> 8;
        result = result | ( (unsigned long)val << 24 );
       
    }
-   
    return result;
 }
 
 void writeLong ( int address, unsigned long value ) {
-
   for ( int i = 0; i < sizeof(long); i++ ) {
        byte val = value & 0xFF;
        EEPROM.write(address + i, val);
